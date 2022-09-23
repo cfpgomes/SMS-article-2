@@ -15,8 +15,6 @@ import numpy as np
 import random
 
 # Functions
-
-
 def retrieve_quartile(row, dic_quartiles_dfs):
     title = row['Publication Title']
     sourceID = row['SourceID']
@@ -60,10 +58,8 @@ def retrieve_conference(row, dic_conferences_dfs):
     return df_title_contains.iloc[0][4]
 
 # Main code
-
-
 def main():
-    df_quality = pd.read_csv('QualityChecklists.csv', sep=';', decimal=',')
+    df_quality = pd.read_csv('QualityChecklists.csv', sep=',', decimal='.')
 
     dic_scimagojr_dfs = {}
     dic_scimagojr_dfs['2021'] = pd.read_csv(
@@ -107,7 +103,7 @@ def main():
 
     fig = px.scatter(df_quality.fillna('Not a Journal'), x="SSTOTAL", y="SRTOTAL",
                      range_x=[0, 1], range_y=[0, 1], color='Quartile')
-    fig.write_html("scimagojr.html")
+    fig.write_image("scimagojr.pdf")
 
     
     dic_CORE_dfs = {}
@@ -149,7 +145,7 @@ def main():
 
     fig = px.scatter(df_quality.fillna('Not a Conference'), x="SSTOTAL", y="SRTOTAL",
                      range_x=[0, 1], range_y=[0, 1], color='Conference')
-    fig.write_html("CORE.html")
+    fig.write_image("CORE.pdf")
 
 if __name__ == "__main__":
     main()
